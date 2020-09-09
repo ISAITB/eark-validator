@@ -106,5 +106,6 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>eark-validator.jar</finalName>
     </build>
 </project>
