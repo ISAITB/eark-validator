@@ -45,13 +45,23 @@ public class Validator {
      * @param digest The archive's hash value.
      * @return The result of the validation.
      */
-    public ValidationResult validate(File archive, String digest) {
-        UploadResult uploadResult = uploadArchive(archive, digest);
+    public ValidationResult uploadAndValidate(File archive, String digest) {
+        UploadResult uploadResult = uploadInternal(archive, digest);
         ValidationReport report = null;
         if (uploadResult.getValidationUrl() != null && !uploadResult.getValidationUrl().isBlank()) {
-            report = getValidationReport(uploadResult.getValidationUrl());
+            report = validateInternal(uploadResult.getValidationUrl());
         }
         return new ValidationResult(uploadResult, report);
+    }
+
+    public ValidationResult upload(File archive, String digest) {
+        UploadResult uploadResult = uploadInternal(archive, digest);
+        return new ValidationResult(uploadResult, null);
+    }
+
+    public ValidationResult validate(String reportUrl) {
+        ValidationReport report = validateInternal(reportUrl);
+        return new ValidationResult(null, report);
     }
 
     /**
@@ -60,7 +70,7 @@ public class Validator {
      * @param reportUrl The URL to call.
      * @return The report.
      */
-    private ValidationReport getValidationReport(String reportUrl) {
+    private ValidationReport validateInternal(String reportUrl) {
         if (forceHttps && reportUrl.startsWith("http://")) {
             reportUrl = "https" + reportUrl.substring(4);
         }
@@ -83,7 +93,7 @@ public class Validator {
      * @param digest The archive's digest.
      * @return The result of the call.
      */
-    private UploadResult uploadArchive(File archive, String digest) {
+    private UploadResult uploadInternal(File archive, String digest) {
         HttpEntity uploadEntity = MultipartEntityBuilder.create()
                 .setMode(HttpMultipartMode.RFC6532)
                 .addPart("package", new FileBody(archive, ContentType.DEFAULT_BINARY))

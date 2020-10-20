@@ -15,13 +15,16 @@ import javax.xml.ws.Endpoint;
  * Configuration class responsible for creating the Spring beans required by the service.
  */
 @Configuration
-public class ValidationServiceConfig {
+public class ServiceConfig {
 
     @Autowired
     Bus cxfBus;
 
     @Autowired
     ValidationServiceImpl validationServiceImplementation;
+
+    @Autowired
+    ProcessingServiceImpl processingServiceImplementation;
 
     /**
      * JSON serialiser/deserialiser.
@@ -34,7 +37,7 @@ public class ValidationServiceConfig {
     }
 
     /**
-     * The CXF endpoint that will serve service calls.
+     * The CXF endpoint that will serve validation service calls.
      *
      * @return The endpoint.
      */
@@ -44,6 +47,20 @@ public class ValidationServiceConfig {
         endpoint.setServiceName(new QName("http://www.gitb.com/vs/v1/", "ValidationService"));
         endpoint.setEndpointName(new QName("http://www.gitb.com/vs/v1/", "ValidationServicePort"));
         endpoint.publish("/validation");
+        return endpoint;
+    }
+
+    /**
+     * The CXF endpoint that will serve processing service calls.
+     *
+     * @return The endpoint.
+     */
+    @Bean
+    public Endpoint processingService() {
+        EndpointImpl endpoint = new EndpointImpl(cxfBus, processingServiceImplementation);
+        endpoint.setServiceName(new QName("http://www.gitb.com/ps/v1/", "ProcessingServiceService"));
+        endpoint.setEndpointName(new QName("http://www.gitb.com/ps/v1/", "ProcessingServicePort"));
+        endpoint.publish("/processing");
         return endpoint;
     }
 
