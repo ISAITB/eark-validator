@@ -1,12 +1,12 @@
 package eu.europa.ec.itb.validator.eark.gitb;
 
 import com.gitb.core.*;
-import com.gitb.tr.TAR;
-import com.gitb.tr.TestAssertionGroupReportsType;
-import com.gitb.tr.TestResultType;
-import com.gitb.tr.ValidationCounters;
+import com.gitb.tr.*;
+import com.gitb.tr.ObjectFactory;
 import com.gitb.vs.ValidateRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -19,6 +19,9 @@ import java.util.List;
  * BAse class holding common methods for service implementations.
  */
 public abstract class BaseServiceImpl {
+
+    @Autowired
+    private ObjectFactory objectFactory;
 
     /**
      * Create a parameter definition.
@@ -122,6 +125,51 @@ public abstract class BaseServiceImpl {
         report.getCounters().setNrOfWarnings(BigInteger.ZERO);
         report.getCounters().setNrOfAssertions(BigInteger.ZERO);
         return report;
+    }
+
+    /**
+     * Add an error message to the report.
+     *
+     * @param message The message.
+     * @param reportItems The report's items.
+     */
+    void addReportItemError(String message, List<JAXBElement<TestAssertionReportType>> reportItems) {
+        reportItems.add(objectFactory.createTestAssertionGroupReportsTypeError(createReportItemContent(message, null, null, null)));
+    }
+
+    /**
+     * Add an error item to the report.
+     *
+     * @param item The item.
+     * @param reportItems The report's items.
+     */
+    void addReportItemError(BAR item, List<JAXBElement<TestAssertionReportType>> reportItems) {
+        reportItems.add(objectFactory.createTestAssertionGroupReportsTypeError(item));
+    }
+
+    /**
+     * Add a warning item to the report.
+     *
+     * @param item The item.
+     * @param reportItems The report's items.
+     */
+    void addReportItemWarning(BAR item, List<JAXBElement<TestAssertionReportType>> reportItems) {
+        reportItems.add(objectFactory.createTestAssertionGroupReportsTypeWarning(item));
+    }
+
+    /**
+     * Create the internal content of a report's item.
+     *
+     * @param message The message.
+     * @return The content to wrap.
+     */
+    BAR createReportItemContent(String message, String test, String ruleId, String location) {
+        BAR itemContent = new BAR();
+        itemContent.setDescription(message);
+        itemContent.setTest(test);
+        itemContent.setAssertionID(ruleId);
+        itemContent.setLocation(location);
+        return itemContent;
     }
 
 }
