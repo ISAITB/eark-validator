@@ -1,12 +1,11 @@
 package eu.europa.ec.itb.validator.eark.gitb;
 
 import com.gitb.core.*;
-import com.gitb.tr.*;
 import com.gitb.tr.ObjectFactory;
-import com.gitb.vs.ValidateRequest;
+import com.gitb.tr.*;
+import jakarta.xml.bind.JAXBElement;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;

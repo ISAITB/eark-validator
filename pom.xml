@@ -6,20 +6,20 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.3.RELEASE</version>
+        <version>3.1.0</version>
     </parent>
     <groupId>eu.europa.ec.itb.validator.eark</groupId>
     <artifactId>eark-validator</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <!-- Dependency and plugin versions. -->
-        <version.com.gitb>1.11.0</version.com.gitb>
-        <version.org.apache.cxf>3.4.0</version.org.apache.cxf>
+        <version.com.gitb>1.20.1-M1</version.com.gitb>
+        <version.org.apache.cxf>4.0.2</version.org.apache.cxf>
         <version.com.spotify.dockerfile-maven-plugin>1.4.12</version.com.spotify.dockerfile-maven-plugin>
-        <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
-        <version.commonsIo>2.7</version.commonsIo>
-        <version.org.apache.httpclient>4.5.12</version.org.apache.httpclient>
-        <version.jackson>2.11.2</version.jackson>
+        <version.maven-compiler-plugin>3.11.0</version.maven-compiler-plugin>
+        <version.commonsIo>2.13.0</version.commonsIo>
+        <version.org.apache.httpclient>4.5.14</version.org.apache.httpclient>
+        <version.jackson>2.15.2</version.jackson>
         <!-- Other properties. -->
         <docker.image.prefix>local</docker.image.prefix>
     </properties>
@@ -30,7 +30,7 @@
         </dependency>
         <dependency>
             <groupId>eu.europa.ec.itb</groupId>
-            <artifactId>gitb-types</artifactId>
+            <artifactId>gitb-types-jakarta</artifactId>
             <version>${version.com.gitb}</version>
         </dependency>
         <dependency>
@@ -71,14 +71,13 @@
     </dependencies>
     <build>
         <plugins>
-            <!-- Used to enforce Java 11 as a minimum. -->
+            <!-- Used to enforce Java 17 as a minimum. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${version.maven-compiler-plugin}</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <release>17</release>
                 </configuration>
             </plugin>
             <!-- Used to create an executable JAR file. -->
