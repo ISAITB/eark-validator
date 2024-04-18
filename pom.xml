@@ -6,20 +6,20 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
+        <version>3.2.4</version>
     </parent>
     <groupId>eu.europa.ec.itb.validator.eark</groupId>
     <artifactId>eark-validator</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <!-- Dependency and plugin versions. -->
-        <version.com.gitb>1.20.1-M1</version.com.gitb>
-        <version.org.apache.cxf>4.0.2</version.org.apache.cxf>
+        <version.com.gitb>1.22.0</version.com.gitb>
+        <version.org.apache.cxf>4.0.4</version.org.apache.cxf>
         <version.com.spotify.dockerfile-maven-plugin>1.4.12</version.com.spotify.dockerfile-maven-plugin>
         <version.maven-compiler-plugin>3.11.0</version.maven-compiler-plugin>
         <version.commonsIo>2.13.0</version.commonsIo>
         <version.org.apache.httpclient>4.5.14</version.org.apache.httpclient>
-        <version.jackson>2.15.2</version.jackson>
+        <version.jackson>2.16.1</version.jackson>
         <!-- Other properties. -->
         <docker.image.prefix>local</docker.image.prefix>
     </properties>
